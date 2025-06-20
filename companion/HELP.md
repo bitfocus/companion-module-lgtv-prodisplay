@@ -13,18 +13,24 @@ This module controls LG's Pro Displays.
 
 - Power On/Off
 - Set Input Source
-- Display Mute On/Off
+- Screen Mute On/Off
+- Volume Mute On/Off
+- Set Volume Level
+- Increase/Decrease Volume Level
 
 ## Feedbacks
 
 - Power State
 - Input Source is [x]
-- Display is Muted
+- Screen is Muted
+- Volume is Muted
 
 ## Variables
 
 - Power State
 - Input Source
-- Display Mute State
+- Screen Mute State
+- Volume Mute State
+- Volume Level
 
 ## Presets
