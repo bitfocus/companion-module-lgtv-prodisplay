@@ -98,7 +98,10 @@ export function UpdateActions(self: LGProDisplayInstance): void {
 		],
 		callback: async (event) => {
 			const currentLevel = self.volumeLevel
-			const newLevel = currentLevel + Number(event.options.level)
+			let newLevel = currentLevel + Number(event.options.level)
+			if (newLevel > 100) {
+				newLevel = 100
+			}
 			const levelHex = newLevel?.toString(16).padStart(2, '0')
 			await SendCommand(self, 'kf', levelHex)
 		},
@@ -118,7 +121,10 @@ export function UpdateActions(self: LGProDisplayInstance): void {
 		],
 		callback: async (event) => {
 			const currentLevel = self.volumeLevel
-			const newLevel = currentLevel - Number(event.options.level)
+			let newLevel = currentLevel - Number(event.options.level)
+			if (newLevel < 0) {
+				newLevel = 0
+			}
 			const levelHex = newLevel?.toString(16).padStart(2, '0')
 			await SendCommand(self, 'kf', levelHex)
 		},
