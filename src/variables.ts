@@ -18,12 +18,12 @@ export function UpdateVariableDefinitions(self: LGProDisplayInstance): void {
 		variableId: 'screen_mute_state',
 	})
 	variables.push({
-		name: 'Volume Level',
-		variableId: 'volume_level',
-	})
-	variables.push({
 		name: 'Volume Mute State',
 		variableId: 'volume_mute_state',
+	})
+	variables.push({
+		name: 'Volume Level',
+		variableId: 'volume_level',
 	})
 
 	self.setVariableDefinitions(variables)
