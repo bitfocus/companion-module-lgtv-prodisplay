@@ -51,32 +51,43 @@ function StartPolling(self: LGProDisplayInstance): void {
 }
 
 function ProcessData(self: LGProDisplayInstance, response: string): void {
-	const parts = response.split(' ')
-	if (parts.length >= 4) {
-		const [cmd2, _setId, _ok, value] = parts
+	const parts = response.trim().split(' ')
+	if (parts.length >= 3) {
+		const [cmd2, _setId, statusWithValue] = parts
+		const status = statusWithValue.substring(0, 2)
+		const value = statusWithValue.substring(2).replace(/[^0-9A-Fa-f]/g, '')
+
+		if (status !== 'OK') {
+			if (self.config.verbose) {
+				self.log('debug', `Received NG or malformed status: ${response}`)
+			}
+			return
+		}
+
 		switch (cmd2) {
 			case 'a':
 				self.powerState = parseInt(value, 16)
 				const power_state = self.powerState === 1 ? 'On' : 'Off'
 				self.setVariableValues({ power_state })
-				self.checkFeedbacks('powerStatus')
+				self.checkFeedbacks('powerState')
 				break
 			case 'b':
 				self.inputState = value
 				const input_name = self.CHOICES_INPUTS.find((i) => i.id == value)?.label || `Unknown (${value})`
 				self.setVariableValues({ current_input: input_name })
-				self.checkFeedbacks('inputStatus')
+				self.checkFeedbacks('inputState')
 				break
 			case 'd':
 				self.screenMuteState = parseInt(value, 16)
 				const screen_mute_state = self.screenMuteState === 0 ? 'Muted' : 'Unmuted'
 				self.setVariableValues({ screen_mute_state })
-				self.checkFeedbacks('screenMute')
+				self.checkFeedbacks('screenMuteState')
 				break
 			case 'e':
 				self.volumeMuteState = parseInt(value, 16)
 				const volume_mute_state = self.volumeMuteState === 0 ? 'Muted' : 'Unmuted'
 				self.setVariableValues({ volume_mute_state })
+				self.checkFeedbacks('volumeMuteState')
 				break
 			case 'f':
 				self.volumeLevel = parseInt(value, 16)
