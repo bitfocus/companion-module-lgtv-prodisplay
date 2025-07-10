@@ -79,7 +79,7 @@ function ProcessData(self: LGProDisplayInstance, response: string): void {
 				break
 			case 'd':
 				self.screenMuteState = parseInt(value, 16)
-				const screen_mute_state = self.screenMuteState === 0 ? 'Muted' : 'Unmuted'
+				const screen_mute_state = self.screenMuteState === 0 ? 'Unmuted' : 'Muted'
 				self.setVariableValues({ screen_mute_state })
 				self.checkFeedbacks('screenMuteState')
 				break
